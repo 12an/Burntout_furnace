@@ -1,6 +1,7 @@
 #include "Modulos/datas_model.h"
 //variables software
 TimerHandle_t xTimers;
+SemaphoreHandle_t xSemaphore_USB, xSemaphore_TEMP;
 
 // direccion pin para resistencias
 #define enable_resistencia 5

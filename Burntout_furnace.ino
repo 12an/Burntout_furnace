@@ -1,5 +1,7 @@
 #include <Arduino_FreeRTOS.h>
+#include <FreeRTOSConfg.h>
 #include <timers.h>
+#include <semphr.h>
 #include "Modulos/comunicacion.h"
 #include "Modulos/datas_model.h"
 #include "Modulos/view_model.h"
