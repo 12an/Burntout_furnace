@@ -1,5 +1,6 @@
 #include "Modulos/datas_model.h"
-
+//variables software
+TimerHandle_t xTimers;
 
 // direccion pin para resistencias
 #define enable_resistencia 5

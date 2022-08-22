@@ -1,4 +1,5 @@
 #include <Arduino_FreeRTOS.h>
+#include <timers.h>
 #include "Modulos/comunicacion.h"
 #include "Modulos/datas_model.h"
 #include "Modulos/view_model.h"
@@ -9,7 +10,7 @@ void view_leds(void *parametros);
 void USB(void *parametros);
 void sensor(void *parametros);
 void minutos_clock(void *parametros);
-void temperatura_minutos(void *parametros);
+void temperatura_minutos(TimerHandle_t xTimer);
 
 
 void setup() {
@@ -52,22 +53,15 @@ void setup() {
               ,1        // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
               ,NULL
               );
-  xTaskCreate(
-              minutos_clock
-              ,"minutos_clock_" // A name just for humans
-              ,128      // This stack size can be checked and adjusted by reading the Stack Highwater
-              ,NULL
-              ,2        // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-              ,NULL
-              ); 
-  xTaskCreate(
+  xTimers = xTimerCreate(
+              minutos_clock,
+              pdMS_TO_TICKS(60000),
+              pdTRUE,
+              ( void * ) 0,
               temperatura_minutos
-              ,"temperatura_minutos_" // A name just for humans
-              ,128      // This stack size can be checked and adjusted by reading the Stack Highwater
-              ,NULL
-              ,2        // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-              ,NULL
-              );                
+              );
+                
+             
 }
 
 
@@ -112,19 +106,7 @@ void sensor( void *parametros){
 }
 
 
-void minutos_clock( void *parametros){
-  (void) *parametros;
-  for(;;){
-    
-  }
+void temperatura_minutos(TimerHandle_t xTimer){
 
-}
-
-
-void temperatura_minutos( void *parametros){
-  (void) *parametros;
-  for(;;){
-    
-  }
 
 }
