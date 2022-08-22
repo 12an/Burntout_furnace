@@ -53,6 +53,7 @@ void setup() {
               ,1        // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
               ,NULL
               );
+  //creando timer de periodo de un minuto para calcular la temperatura objetibo por minuto
   xTimers = xTimerCreate(
               minutos_clock,
               pdMS_TO_TICKS(60000),
@@ -60,8 +61,21 @@ void setup() {
               ( void * ) 0,
               temperatura_minutos
               );
-                
-             
+  if( xTimers == NULL ){
+    Serial.write("no se ha creado el timer, para la temperatura");
+    }
+  else{
+    /* Start the timer.*/
+    if( xTimerStart( xTimers[ x ], 0 ) != pdPASS ){
+      Serial.write("no se activo el timer");
+      }
+    }
+  //starting tasks and timers
+  //creando un mutex para impedir acceso de temperatura_minutos a las variables que se pueden 
+  // usar mientras usb la edita
+  vTaskStartScheduler();
+
+
 }
 
 
@@ -107,6 +121,5 @@ void sensor( void *parametros){
 
 
 void temperatura_minutos(TimerHandle_t xTimer){
-
-
+  
 }
